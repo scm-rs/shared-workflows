@@ -73,7 +73,7 @@ jobs:
 
       - name: Install cargo-all-features
         run: |
-          cargo binstall -y cargo-all-features
+          cargo binstall -y cargo-all-features --force
 
       - name: Check (all features)
         run: |
