@@ -57,8 +57,7 @@ jobs:
           cargo ws version custom ${{ needs.init.outputs.version }} --all --no-git-commit --force "*" --yes
       - name: Ensure this did not change anything
         run: |
-          git diff --exit-code
-          if [ $? -gt 0 ]; then
+          if ! git diff --exit-code; then
               echo "::error::Uncommitted changes after setting the version. This indicates that the version of the tag does not align with the version of the crates."
               exit 1
           fi
