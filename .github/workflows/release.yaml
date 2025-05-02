@@ -64,7 +64,7 @@ jobs:
   ci:
     needs:
       - init
-    uses: .github/workflows/ci.yaml
+    uses: ./.github/workflows/ci.yaml
     secrets:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
