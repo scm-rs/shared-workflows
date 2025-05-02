@@ -65,6 +65,8 @@ jobs:
     needs:
       - init
     uses: .github/workflows/ci.yaml
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     needs:
