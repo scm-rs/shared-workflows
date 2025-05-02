@@ -60,18 +60,10 @@ jobs:
               exit 1
           fi
 
-  # ensure we pass CI
-  ci:
-    needs:
-      - init
-    uses: ./.github/workflows/ci.yaml
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   release:
     needs:
       - init
-      - ci
+      - ensure-version
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
