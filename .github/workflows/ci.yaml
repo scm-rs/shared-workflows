@@ -9,6 +9,15 @@ on:
       preflight_install:
         required: false
         type: string
+      preflight_semver_exclude:
+        required: false
+        type: string
+      preflight_semver_feature_group:
+        required: false
+        type: string
+      preflight_semver_features:
+        required: false
+        type: string
 
 jobs:
 
@@ -39,6 +48,10 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
       - uses: obi1kenobi/cargo-semver-checks-action@v2
+        with:
+          exclude: ${{ inputs.preflight_semver_exclude }}
+          feature-group: ${{ inputs.preflight_semver_feature_group }}
+          features: ${{ inputs.preflight_semver_features }}
 
       - name: Check formatting
         run: |
