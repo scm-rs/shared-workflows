@@ -6,6 +6,9 @@ on:
       matrix_include:
         required: false
         type: string
+      preflight_install:
+        required: false
+        type: string
 
 jobs:
 
@@ -27,8 +30,11 @@ jobs:
   preflight:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Install dependencies
+        if: preflight_install != ''
+        run: ${{ preflight_install }}
 
+      - uses: actions/checkout@v4
       - uses: webiny/action-conventional-commits@v1.3.0
 
       - uses: Swatinem/rust-cache@v2
