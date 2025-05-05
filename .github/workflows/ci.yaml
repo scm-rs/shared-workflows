@@ -71,6 +71,9 @@ jobs:
         if: matrix.install != ''
         run: ${{ matrix.install }}
 
+      - name: Tree
+        run: cargo +${{ matrix.rust }} tree ${{ matrix.args }}
+
       - name: Clippy
         run: cargo +${{ matrix.rust }} clippy ${{ matrix.args }} --all-targets --tests --bins --all -- -D warnings
 
