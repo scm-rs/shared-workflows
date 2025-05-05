@@ -66,7 +66,7 @@ jobs:
     needs:
       - init
       - ensure-version
-    runs-on: ubuntu-24.04 # required my convco and GLIBC
+    runs-on: ubuntu-24.04 # required by convco and GLIBC
     steps:
       - uses: actions/checkout@v4
         with:
@@ -78,6 +78,18 @@ jobs:
           unzip convco-ubuntu.zip
           chmod a+x convco
           sudo mv convco /usr/local/bin
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          repository: "${{ github.repository_owner }}/.convco"
+          path: .convco
+
+      - run: |
+          cp $GITHUB_WORKSPACE/.convco/.versionrc .
+
+      - run: |
+          ls
 
       - name: Generate changelog
         run: |
