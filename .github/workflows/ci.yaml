@@ -31,8 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install dependencies
-        if: preflight_install != ''
-        run: ${{ preflight_install }}
+        if: inputs.preflight_install != ''
+        run: ${{ inputs.preflight_install }}
 
       - uses: actions/checkout@v4
       - uses: webiny/action-conventional-commits@v1.3.0
