@@ -2,6 +2,10 @@ name: CI
 
 on:
   workflow_call:
+    inputs:
+      matrix_include:
+        required: false
+        type: string
 
 jobs:
 
@@ -51,6 +55,8 @@ jobs:
           - windows-2022
           - macos-14
 
+        include: ${{ fromJson(inputs.matrix_include || '[]') }}
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -61,11 +67,15 @@ jobs:
         run: |
           rustup install ${{ matrix.rust }} --no-self-update --component clippy
 
+      - name: Install dependencies
+        if: matrix.install != ''
+        run: ${{ matrix.install }}
+
       - name: Clippy
-        run: cargo +${{ matrix.rust }} clippy --all-targets --tests --bins --all -- -D warnings
+        run: cargo +${{ matrix.rust }} clippy ${{ matrix.args }} --all-targets --tests --bins --all -- -D warnings
 
       - name: Test
-        run: cargo +${{ matrix.rust }} test
+        run: cargo +${{ matrix.rust }} test ${{ matrix.args }}
 
       - name: Install binstall
         env:
@@ -81,4 +91,4 @@ jobs:
 
       - name: Check (all features)
         run: |
-          cargo check-all-features
+          cargo check-all-features ${{ matrix.args }}
