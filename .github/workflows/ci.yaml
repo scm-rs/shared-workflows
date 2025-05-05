@@ -113,4 +113,4 @@ jobs:
 
       - name: Check (all features)
         run: |
-          cargo check-all-features ${{ matrix.args }}
+          cargo check-all-features
