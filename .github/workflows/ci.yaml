@@ -103,20 +103,20 @@ jobs:
         run: cargo +${{ matrix.rust }} test ${{ matrix.args }}
 
       - name: Install binstall
-        if: matrix.skip_all_features == true
+        if: matrix.skip_all_features != true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
       - name: Install cargo-all-features
-        if: matrix.skip_all_features == true
+        if: matrix.skip_all_features != true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cargo binstall -y cargo-all-features --force
 
       - name: Check (all features)
-        if: matrix.skip_all_features == true
+        if: matrix.skip_all_features != true
         run: |
           cargo check-all-features
