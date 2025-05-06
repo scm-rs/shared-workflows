@@ -79,6 +79,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - run: echo "${{ toJSON(matrix) }}"
+
       - uses: actions/checkout@v4
       - uses: Swatinem/rust-cache@v2
 
