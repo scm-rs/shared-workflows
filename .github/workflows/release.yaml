@@ -123,6 +123,7 @@ jobs:
           cp -pv ${{ inputs.copy_staging }} staging/
 
       - uses: actions/attest-build-provenance@v1
+        if: inputs.copy_staging != ''
         with:
           subject-path: 'staging/*'
 
