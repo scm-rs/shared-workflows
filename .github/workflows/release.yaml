@@ -95,6 +95,10 @@ jobs:
         run: |
           convco changelog -s --max-majors=1 --max-minors=1 --max-patches=1 > RELEASE_LOG.md
 
+      - name: Dump changelog
+        run: |
+          cat RELEASE_LOG.md
+
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
