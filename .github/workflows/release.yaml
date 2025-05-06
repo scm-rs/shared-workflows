@@ -110,7 +110,7 @@ jobs:
           path: ~/download
 
       - name: Display downloaded content
-        run: test -d ~/download && ls -R ~/download
+        run: ls -R ~/download || true
 
       - name: Creating staging area
         run: |
