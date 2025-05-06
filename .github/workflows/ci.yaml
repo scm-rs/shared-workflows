@@ -88,6 +88,7 @@ jobs:
 
       - name: Install dependencies
         if: matrix.install != ''
+        shell: bash
         run: ${{ matrix.install }}
 
       - name: Tree
