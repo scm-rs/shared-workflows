@@ -2,9 +2,15 @@ name: release
 
 on:
   workflow_call:
+    inputs:
+      copy_staging:
+        required: false
+        type: string
+        description: An expression for a `cp` command to copy to the staging area after downloading all artifacts
     secrets:
       CARGO_REGISTRY_TOKEN:
         required: true
+        description: A token for publishing to crates.io
 
 jobs:
 
@@ -99,6 +105,30 @@ jobs:
         run: |
           cat RELEASE_LOG.md
 
+      - uses: actions/download-artifact@v4 # download all artifacts
+        with:
+          path: ~/download
+
+      - name: Display downloaded content
+        run: ls -R ~/download
+
+      - name: Creating staging area
+        run: |
+          mkdir -p staging
+
+      - name: Stage release
+        if: inputs.copy_staging != ''
+        run: |
+          mkdir -p staging
+          cp -pv ${{ inputs.copy_staging }} staging/
+
+      - uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: 'staging/*'
+
+      - name: Display staging area
+        run: ls -R staging
+
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -108,7 +138,7 @@ jobs:
           if [[ "${{ needs.init.outputs.prerelease }}" == "true" ]]; then
             OPTS="${OPTS} -p"
           fi
-          gh release create ${OPTS} --title "${{ needs.init.outputs.version }}" -F RELEASE_LOG.md ${TAG}
+          gh release create ${OPTS} --title "${{ needs.init.outputs.version }}" -F RELEASE_LOG.md ${TAG} $(find staging -type f)
 
   publish:
     needs:
