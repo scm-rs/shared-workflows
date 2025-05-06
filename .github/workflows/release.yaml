@@ -84,7 +84,6 @@ jobs:
           fetch-depth: 0
           repository: "${{ github.repository_owner }}/.convco"
           path: .convco
-          ref: main
 
       - run: |
           cp $GITHUB_WORKSPACE/.convco/.versionrc .
