@@ -47,7 +47,7 @@ jobs:
       - init
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup cargo-binstall
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -74,7 +74,7 @@ jobs:
       - ensure-version
     runs-on: ubuntu-24.04 # required by convco and GLIBC
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -85,7 +85,7 @@ jobs:
           chmod a+x convco
           sudo mv convco /usr/local/bin
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
           repository: "${{ github.repository_owner }}/.convco"
@@ -147,7 +147,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - uses: Swatinem/rust-cache@v2
       - name: Install cargo release

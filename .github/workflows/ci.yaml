@@ -26,7 +26,7 @@ jobs:
     outputs:
       rust-version: ${{ steps.get-version.outputs.rust-version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Extract version
         id: get-version
         run: |
@@ -43,7 +43,7 @@ jobs:
         if: inputs.preflight_install != ''
         run: ${{ inputs.preflight_install }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: webiny/action-conventional-commits@v1.3.0
 
       - uses: Swatinem/rust-cache@v2
@@ -82,7 +82,7 @@ jobs:
       - name: Dump matrix config
         run: echo "${{ toJSON(matrix) }}"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: Swatinem/rust-cache@v2
 
       - name: Install Rust ${{ matrix.rust }}
