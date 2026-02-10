@@ -22,7 +22,7 @@ on:
 jobs:
 
   msrv:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-24.04
     outputs:
       rust-version: ${{ steps.get-version.outputs.rust-version }}
     steps:
