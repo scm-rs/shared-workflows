@@ -15,7 +15,7 @@ on:
 jobs:
 
   init:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       version: ${{steps.version.outputs.version}}
       prerelease: ${{steps.state.outputs.prerelease}}
@@ -152,7 +152,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - name: Install cargo release
         run: |
-          cargo install cargo-release
+          cargo install cargo-release --force
 
       - name: Publish
         run: cargo release publish --workspace --no-verify --allow-branch HEAD --execute --no-confirm
