@@ -44,7 +44,7 @@ jobs:
         run: ${{ inputs.preflight_install }}
 
       - uses: actions/checkout@v5
-      - uses: webiny/action-conventional-commits@v1.3.0
+      - uses: webiny/action-conventional-commits@v1.4.2
 
       - uses: Swatinem/rust-cache@v2
       - uses: obi1kenobi/cargo-semver-checks-action@v2
