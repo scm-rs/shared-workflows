@@ -145,6 +145,7 @@ jobs:
     needs:
       - release
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       id-token: write
       contents: read
