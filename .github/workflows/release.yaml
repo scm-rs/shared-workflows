@@ -47,7 +47,7 @@ jobs:
       - init
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
       - name: Setup cargo-binstall
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -74,7 +74,7 @@ jobs:
       - ensure-version
     runs-on: ubuntu-24.04 # required by convco and GLIBC
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -85,7 +85,7 @@ jobs:
           chmod a+x convco
           sudo mv convco /usr/local/bin
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           repository: "${{ github.repository_owner }}/.convco"
@@ -105,7 +105,7 @@ jobs:
         run: |
           cat RELEASE_LOG.md
 
-      - uses: actions/download-artifact@v4 # download all artifacts
+      - uses: actions/download-artifact@v8 # download all artifacts
         with:
           path: ~/download
 
@@ -122,7 +122,7 @@ jobs:
           mkdir -p staging
           cp -pv ${{ inputs.copy_staging }} staging/
 
-      - uses: actions/attest-build-provenance@v1
+      - uses: actions/attest-build-provenance@v4
         if: inputs.copy_staging != ''
         with:
           subject-path: 'staging/*'
@@ -151,7 +151,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - uses: Swatinem/rust-cache@v2
 
