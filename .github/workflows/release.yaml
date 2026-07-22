@@ -155,9 +155,11 @@ jobs:
       - uses: Swatinem/rust-cache@v2
 
       - name: Authenticate with crates.io (trusted publishing)
-        if: secrets.CARGO_REGISTRY_TOKEN == ''
+        if: env.HAS_TOKEN != 'true'
         uses: rust-lang/crates-io-auth-action@v1
         id: crates-io-auth
+        env:
+          HAS_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN != '' }}
 
       - name: Install cargo release
         run: |
