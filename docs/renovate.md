@@ -55,8 +55,19 @@ Shared defaults include:
   Normal updates can still update a tracked `Cargo.lock`.
 - A Dependency Dashboard, a three-day minimum release age, and limits of two open
   and one new PR per hour.
-- Individual root dependency updates that do not re-enable held dependencies,
-  with a warning for potentially breaking pre-1.0 minor changes.
+- Root dependency updates grouped by Cargo semver compatibility, without
+  re-enabling held dependencies:
+  - `rust-dependencies`: Cargo-compatible updates (1.x+ minor and patch, 0.x
+    patch).
+  - `rust-breaking`: Cargo-breaking updates (majors, 0.x minors and 0.0.x
+    patches), with a compatibility warning. Coupled crates such as `syn` and
+    `prettyplease` therefore migrate in one PR, without per-package lists.
+  This is Cargo compatibility, not Renovate's major/non-major split, so
+  `group:allNonMajor` is unsuitable for this policy. Unrelated breaking
+  migrations share one PR and can block each other; compatible updates keep
+  flowing separately. These are the two normal version-update groups under the
+  shared defaults, not a hard PR limit: vulnerability alerts, special updates
+  and local `renovate.json` overrides can produce additional PRs.
 - The same digest-pinned Renovate image for production and strict validation.
   Scripts, plugins, custom post-upgrade commands and automatic discovery are off.
 

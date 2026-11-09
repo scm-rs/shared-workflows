@@ -49,19 +49,31 @@
         "platformAutomerge": false
       },
       {
-        "description": "Review root-manifest updates individually while preserving inherited dependency holds.",
+        "description": "Group Cargo-compatible updates by Cargo semver rules: 1.x+ minor/patch and 0.x patch, but not 0.0.x.",
         "matchFileNames": ["Cargo.toml"],
+        "matchIsBreaking": false,
+        "groupName": "rust-dependencies",
         "automerge": false,
-        "platformAutomerge": false,
-        "rangeStrategy": "auto",
-        "groupName": null
+        "platformAutomerge": false
       },
       {
+        "description": "Group Cargo-breaking updates (majors, 0.x minors, 0.0.x patches) so coupled crates such as syn and prettyplease migrate together. Renovate prefixes major group slugs with 'major-', so this slug matches the major fallback below.",
         "matchFileNames": ["Cargo.toml"],
-        "matchCurrentVersion": "<1.0.0",
-        "matchUpdateTypes": ["minor"],
+        "matchIsBreaking": true,
+        "groupName": "rust-breaking",
+        "groupSlug": "major-rust-breaking",
         "prBodyNotes": [
-          "Pre-1.0 minor update: potentially breaking. Review compatibility and actual MSRV results before ordinary reviewed/queued merge."
+          "Semver-breaking updates: review compatibility, generated API and actual MSRV results."
+        ]
+      },
+      {
+        "description": "Major-update fallback: also covers cases the pinned Cargo isBreaking check misses (e.g. 0.2.3 -> 1.2.4). Becomes 'major-rust-breaking' after Renovate's major prefix.",
+        "matchFileNames": ["Cargo.toml"],
+        "matchUpdateTypes": ["major"],
+        "groupName": "rust-breaking",
+        "groupSlug": "rust-breaking",
+        "prBodyNotes": [
+          "Semver-breaking updates: review compatibility, generated API and actual MSRV results."
         ]
       }
     ]
