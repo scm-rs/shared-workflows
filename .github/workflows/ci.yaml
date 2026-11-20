@@ -72,7 +72,7 @@ jobs:
         os:
           - ubuntu-24.04
           - windows-2025
-          - macos-15
+          - macos-26
 
         include: ${{ fromJson(inputs.matrix_include || '[]') }}
 
